@@ -46,3 +46,6 @@ C:\git\GetGumtree\bin\Debug\ThoughtWorks.Selenium.Core.xml
 C:\git\GetGumtree\bin\Debug\WebDriver.xml
 C:\git\GetGumtree\bin\Debug\WebDriver.Support.xml
 C:\git\GetGumtree\obj\Debug\GetGumtree.csprojResolveAssemblyReference.cache
+C:\git\GetGumtree\GetGumtree\bin\Debug\GetGumtree.exe.config
+C:\git\GetGumtree\GetGumtree\obj\Debug\GetGumtree.exe
+C:\git\GetGumtree\GetGumtree\obj\Debug\GetGumtree.pdb

@@ -15,6 +15,25 @@ namespace GetGumtree
         {
             try
             {
+                IWebDriver driver = new ChromeDriver(Path.Combine(Directory.GetCurrentDirectory(), "WebDriverServer"));
+                driver.Navigate().GoToUrl("http://www.wesellcars.co.za/");
+                var findElement = driver.FindElements(By.CssSelector("#feed_1 > div > div.vehicles.grid > div.item"));
+                foreach (var item in findElement)
+                {
+                    var lines = item.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+
+                    Console.WriteLine(string.Join(",", lines));
+                }
+
+                driver.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            Console.ReadLine();
+            try
+            {
                 List<VehicleAdd> items = new List<VehicleAdd>();
                 GetItems(items);
                 var cTempCarsTxt = @"c:\temp\GumtreeCars" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss") + ".txt";
