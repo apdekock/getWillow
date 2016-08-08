@@ -53,15 +53,26 @@ namespace GetGumtree
             StringBuilder postTemplate = new StringBuilder();
             postTemplate.AppendLine("---");
             postTemplate.AppendLine("layout: post ");
-            postTemplate.AppendLine("title: \"Scraping\" ");
+            postTemplate.AppendLine("title: \"Scraping and GitSharp, and Spark lines\" ");
             postTemplate.AppendLine("date: 2016-08-07");
-            postTemplate.AppendLine("quote: \"If you get pulled over for speeding.Tell them your spouse has diarrhoea. — Phil Dunphy [Phil’s - osophy]\"");
-            postTemplate.AppendLine("categories: scraping, auto generatingpost ");
+            postTemplate.AppendLine("quote: \"If you get pulled over for speeding. Tell them your spouse has diarrhoea. — Phil Dunphy [Phil’s - osophy]\"");
+            postTemplate.AppendLine("categories: scraping, auto generating post, gitsharp");
             postTemplate.AppendLine("---");
             //postTemplate.AppendLine("While investigating Git and GitSharp[link]");
-            postTemplate.AppendLine(string.Format("This page is a daily re-generated post [last re-generated  {0}], that shows the movement of prices on the [www.weSellCars.co.za](http://www.wesellcars.co.za) website.", DateTime.Now));
-            postTemplate.AppendLine("");
-
+            postTemplate.AppendLine(string.Format("This page is a daily re-generated post (last re-generated  **{0}**), that shows the movement of prices on the [www.weSellCars.co.za](http://www.wesellcars.co.za) website.", DateTime.Now));
+            postTemplate.AppendLine(""); 
+            postTemplate.AppendLine("## Why?"); 
+            postTemplate.AppendLine(""); 
+            postTemplate.AppendLine("This post is a culmination of some side projects playing around with scraping, looking for a way to integrate with git through C# and a challenge to use this blog - which has no back-end or support for any server side scripting to dynamically update a post with the relevant data. I realise that would best be accomplished through making new posts but I opted for an altered post as this is a tech blog, multiple posts would not be appropriate."); 
+            postTemplate.AppendLine(""); 
+            postTemplate.AppendLine("# Lessons learned"); 
+            postTemplate.AppendLine(""); 
+            postTemplate.AppendLine("* [GitSharp](http://www.eqqon.com/index.php/GitSharp) is limited and I needed to grab the project from [github](https://github.com/henon/GitSharp) in order to use it.");
+            postTemplate.AppendLine("The NuGet package kept on complaining about a **repositoryformatversion** setting in config [Core] that it required, it was present, but still complained. I downloaded the project to debug - and did not encounter it. Apart from that - I could not push - and it seems the project does not have a lot of contribution activity (not criticising, jsut stating, I should probably take this up and contribute especially as I would like to employ git as a file store for an application - levering off the already refined functions - more on that in another post)."); 
+            postTemplate.AppendLine("* Scraping with Selenium is probably not the best way - rather employ HttpClient."); 
+            postTemplate.AppendLine("* Quick easy and painless sparklines [jQuery Sparklines](http://omnipotent.net/jquery.sparkline/#s-about)"); 
+            postTemplate.AppendLine("* Still no backend but a simple process running on a server that commits to Git"); 
+           
             var aggregateData = new AggregateData(new FileSystemLocation(args[0]));
             var dictionary = aggregateData.Aggregate();
 
@@ -75,7 +86,6 @@ namespace GetGumtree
 
             streamWriter.Flush();
             streamWriter.Dispose();
-
 
             Repository repository = new Repository(args[1]);
 
