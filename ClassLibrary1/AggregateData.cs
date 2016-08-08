@@ -40,7 +40,7 @@ namespace Aggregator
 
             var monthAgo = DateTime.Now.AddDays(-30);
 
-            var listedAtLeastMonthAgo = cars.Where(c => c.Value.Keys.Max() > monthAgo);
+            var listedAtLeastMonthAgo = cars.Where(c => c.Value.Keys.Max() > monthAgo).OrderByDescending(f => 1 - (f.Value.Values.Last() / f.Value.Values.First()));
 
             return listedAtLeastMonthAgo.ToDictionary(d => d.Key, y => y.Value.Values.Select(f => f));
         }
