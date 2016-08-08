@@ -68,11 +68,13 @@ namespace GetGumtree
             postTemplate.AppendLine("# Lessons learned"); 
             postTemplate.AppendLine(""); 
             postTemplate.AppendLine("* [GitSharp](http://www.eqqon.com/index.php/GitSharp) is limited and I needed to grab the project from [github](https://github.com/henon/GitSharp) in order to use it.");
-            postTemplate.AppendLine("The NuGet package kept on complaining about a **repositoryformatversion** setting in config [Core] that it required, it was present, but still complained. I downloaded the project to debug - and did not encounter it. Apart from that - I could not push - and it seems the project does not have a lot of contribution activity (not criticising, jsut stating, I should probably take this up and contribute especially as I would like to employ git as a file store for an application - levering off the already refined functions - more on that in another post)."); 
+            postTemplate.AppendLine("    The NuGet package kept on complaining about a **repositoryformatversion** setting in config [Core] that it required, it was present, but still complained. I downloaded the project to debug - and did not encounter it. Apart from that - I could not push - and it seems the project does not have a lot of contribution activity (not criticising, jsut stating, I should probably take this up and contribute especially as I would like to employ git as a file store for an application - levering off the already refined functions - more on that in another post)."); 
             postTemplate.AppendLine("* Scraping with Selenium is probably not the best way - rather employ HttpClient."); 
             postTemplate.AppendLine("* Quick easy and painless sparklines [jQuery Sparklines](http://omnipotent.net/jquery.sparkline/#s-about)"); 
-            postTemplate.AppendLine("* Still no backend but a simple process running on a server that commits to Git"); 
-           
+            postTemplate.AppendLine("* Still no backend but a simple process running on a server that commits to Git Gets the job done.");
+
+            postTemplate.AppendLine("");
+            postTemplate.AppendLine("## The List");
             var aggregateData = new AggregateData(new FileSystemLocation(args[0]));
             var dictionary = aggregateData.Aggregate();
 
