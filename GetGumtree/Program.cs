@@ -31,17 +31,22 @@ namespace GetGumtree
                 IWebDriver driver = new ChromeDriver(Path.Combine(Directory.GetCurrentDirectory(), "WebDriverServer"));
                 driver.Navigate().GoToUrl("http://www.wesellcars.co.za/");
                 var findElement = driver.FindElements(By.CssSelector("#feed_1 > div > div.vehicles.grid > div.item"));
+
                 StringBuilder listOfLines = new StringBuilder();
                 foreach (var item in findElement)
                 {
-                    var lines = item.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+                    var image = item.FindElement(By.CssSelector("a"));
+                    var link = image.GetAttribute("href");
+                    var lines = new List<string>(item.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.None));
+                    lines.Add(link);
                     var format = string.Join(",", lines);
                     listOfLines.AppendLine(format);
                     Console.WriteLine(format);
                 }
 
                 driver.Close();
-                var cTempCarsTxt = @"C:\temp\Dropbox\jnk\WeSellCars\WeSellCars_" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss") + ".csv";
+
+                var cTempCarsTxt = arg0 + @"\WeSellCars_" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss") + ".csv";
                 var fileStream = File.Create(cTempCarsTxt);
                 fileStream.Close();
                 File.WriteAllText(cTempCarsTxt, listOfLines.ToString());
@@ -58,20 +63,19 @@ namespace GetGumtree
             postTemplate.AppendLine("quote: \"If you get pulled over for speeding. Tell them your spouse has diarrhoea. — Phil Dunphy [Phil’s - osophy]\"");
             postTemplate.AppendLine("categories: scraping, auto generating post, gitsharp");
             postTemplate.AppendLine("---");
-            //postTemplate.AppendLine("While investigating Git and GitSharp[link]");
             postTemplate.AppendLine(string.Format("This page is a daily re-generated post (last re-generated  **{0}**), that shows the movement of prices on the [www.weSellCars.co.za](http://www.wesellcars.co.za) website.", DateTime.Now));
-            postTemplate.AppendLine(""); 
-            postTemplate.AppendLine("## Why?"); 
-            postTemplate.AppendLine(""); 
-            postTemplate.AppendLine("This post is a culmination of some side projects playing around with scraping, looking for a way to integrate with git through C# and a challenge to use this blog - which has no back-end or support for any server side scripting to dynamically update a post with the relevant data. I realise that would best be accomplished through making new posts but I opted for an altered post as this is a tech blog, multiple posts would not be appropriate."); 
-            postTemplate.AppendLine(""); 
-            postTemplate.AppendLine("# Lessons learned"); 
-            postTemplate.AppendLine(""); 
+            postTemplate.AppendLine("");
+            postTemplate.AppendLine("## Why?");
+            postTemplate.AppendLine("");
+            postTemplate.AppendLine("This post is a culmination of some side projects playing around with scraping, looking for a way to integrate with git through C# and a challenge to use this blog - which has no back-end or support for any server side scripting to dynamically update a post with the relevant data. I realise that would best be accomplished through making new posts but I opted for an altered post as this is a tech blog, multiple posts would not be appropriate.");
+            postTemplate.AppendLine("");
+            postTemplate.AppendLine("# Lessons learned");
+            postTemplate.AppendLine("");
             postTemplate.AppendLine("* [GitSharp](http://www.eqqon.com/index.php/GitSharp) is limited and I needed to grab the project from [github](https://github.com/henon/GitSharp) in order to use it.");
-            postTemplate.AppendLine("    The NuGet package kept on complaining about a **repositoryformatversion** setting in config [Core] that it required, it was present, but still complained. I downloaded the project to debug - and did not encounter it. Apart from that - I could not push - and it seems the project does not have a lot of contribution activity (not criticising, jsut stating, I should probably take this up and contribute especially as I would like to employ git as a file store for an application - levering off the already refined functions - more on that in another post)."); 
-            postTemplate.AppendLine("* Scraping with Selenium is probably not the best way - rather employ HttpClient."); 
-            postTemplate.AppendLine("* Quick easy and painless sparklines [jQuery Sparklines](http://omnipotent.net/jquery.sparkline/#s-about)"); 
-            postTemplate.AppendLine("* Still no backend but a simple process running on a server that commits to Git Gets the job done.");
+            postTemplate.AppendLine("    The NuGet package kept on complaining about a **repositoryformatversion** setting in config [Core] that it required, it was present, but still complained. I downloaded the project to debug - and did not encounter it. Apart from that - I could not push - and it seems the project does not have a lot of contribution activity (not criticising, jsut stating, I should probably take this up and contribute especially as I would like to employ git as a file store for an application - levering off the already refined functions - more on that in another post).");
+            postTemplate.AppendLine("* Scraping with Selenium is probably not the best way - rather employ HttpClient.");
+            postTemplate.AppendLine("* Quick easy and painless sparklines [jQuery Sparklines](http://omnipotent.net/jquery.sparkline/#s-about)");
+            postTemplate.AppendLine("* Still no backend just a simple process running on a server that commits to Git gets the job done.");
 
             postTemplate.AppendLine("");
             postTemplate.AppendLine("## The List");

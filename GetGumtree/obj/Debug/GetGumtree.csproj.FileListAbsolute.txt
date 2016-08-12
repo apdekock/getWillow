@@ -105,7 +105,6 @@ C:\git\GetGumtree\GetGumtree\bin\Debug\Aggregator.dll
 C:\git\GetGumtree\GetGumtree\bin\Debug\git.dll
 C:\git\GetGumtree\GetGumtree\bin\Debug\GitSharp.Core.dll
 C:\git\GetGumtree\GetGumtree\bin\Debug\GitSharp.dll
-C:\git\GetGumtree\GetGumtree\bin\Debug\System.Web.Http.dll
 C:\git\GetGumtree\GetGumtree\bin\Debug\ICSharpCode.SharpZipLib.dll
 C:\git\GetGumtree\GetGumtree\bin\Debug\Tamir.SharpSSH.dll
 C:\git\GetGumtree\GetGumtree\bin\Debug\System.Net.Http.Formatting.dll

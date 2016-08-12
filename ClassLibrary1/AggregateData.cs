@@ -15,11 +15,11 @@ namespace Aggregator
             _dataRepository = dataRepository;
         }
 
-        public Dictionary<string, IEnumerable<double>> Aggregate()
+        public Dictionary<string, SortedItem> Aggregate()
         {
             var dataItems = _dataRepository.GetDataItems();
 
-            var cars = new Dictionary<string, SortedDictionary<DateTime, double>>();
+            var cars = new Dictionary<string, SortedItem>();
 
             foreach (var dataItem in dataItems)
             {
@@ -28,36 +28,44 @@ namespace Aggregator
                     if (!cars.ContainsKey(lineItem.Description))
                     {
                         var p = new SortedDictionary<DateTime, double> { { dataItem.DateTime, lineItem.Price } };
-                        cars.Add(lineItem.Description, p);
+                        cars.Add(lineItem.Description, new SortedItem { Prices = p, Link = lineItem.Link });
                     }
                     else
                     {
                         var dictionary = cars[lineItem.Description];
-                        dictionary[dataItem.DateTime] = lineItem.Price;
+                        dictionary.Prices[dataItem.DateTime] = lineItem.Price;
+                        dictionary.Link = lineItem.Link;
                     }
                 }
             }
 
             var monthAgo = DateTime.Now.AddDays(-30);
 
-            var listedAtLeastMonthAgo = cars.Where(c => c.Value.Keys.Max() > monthAgo).OrderByDescending(f => 1 - (f.Value.Values.Last() / f.Value.Values.First()));
+            var listedAtLeastMonthAgo = cars.Where(c => c.Value.Prices.Keys.Max() > monthAgo).OrderByDescending(f => 1 - (f.Value.Prices.Values.Last() / f.Value.Prices.Values.First()));
 
-            return listedAtLeastMonthAgo.ToDictionary(d => d.Key, y => y.Value.Values.Select(f => f));
+            return listedAtLeastMonthAgo.ToDictionary(d => d.Key, y => new SortedItem() { Prices = y.Value.Prices, Link = y.Value.Link });
         }
 
-        public string GetHTML(Dictionary<string, IEnumerable<double>> aggregate)
+        public string GetHTML(Dictionary<string, SortedItem> aggregate)
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("<ul>");
+            sb.AppendLine("<ol>");
             foreach (var car in aggregate)
             {
-                string Template = "<li><div> {0} <span class=\"sparklines\">{1}</span></div></li>";
-                sb.AppendLine(string.Format(Template, car.Key, string.Join(",", car.Value)));
+                string Template = "<li><div><a Href='{3}'> {0} (R{1})</a> <span class=\"sparklines\">{2}</span></div></li>";
+                var link = string.IsNullOrWhiteSpace(car.Value.Link) ? "http://www.wesellcars.co.za" : car.Value.Link;
+                sb.AppendLine(string.Format(Template, car.Key, car.Value.Prices.Last().Value, string.Join(",", car.Value.Prices.Select(c => c.Value)), link));
             }
-            sb.AppendLine("</ul>");
+            sb.AppendLine("</ol>");
             sb.AppendLine("<script type=\"text/javascript\"> $('.sparklines').sparkline('html'); </script>");
             return sb.ToString();
         }
+    }
+
+    public class SortedItem
+    {
+        public string Link { get; set; }
+        public SortedDictionary<DateTime, double> Prices { get; set; }
     }
 
     public class DataPoint
@@ -130,14 +138,22 @@ namespace Aggregator
         public LineItem(string lineContent)
         {
             var lastFiledSeperator = lineContent.LastIndexOf(',');
-            var priceSection = lineContent.Substring(lastFiledSeperator);
+            var lastSection = lineContent.Substring(lastFiledSeperator);
 
-            Price = Double.Parse(string.Concat(priceSection.Where(Char.IsDigit)));
+            if (lastSection.StartsWith(",http"))
+            {
+                Link = lineContent.Substring(lastFiledSeperator + 1);
+                var last = lineContent.Remove(lastFiledSeperator);
+                lastFiledSeperator = last.LastIndexOf(',');
+                lastSection = last.Substring(lastFiledSeperator);
+            }
+            Price = Double.Parse(string.Concat(lastSection.Where(Char.IsDigit)));
             Description = lineContent.Remove(lastFiledSeperator);
         }
 
         public string Description { get; set; }
         public double Price { get; set; }
+        public string Link { get; set; }
     }
     public interface IDataRepository
     {
