@@ -44,7 +44,7 @@ namespace GetGumtree
                     Console.WriteLine(format);
                 }
 
-                driver.Close();
+                driver.Quit();
 
                 var cTempCarsTxt = arg0 + @"\WeSellCars_" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss") + ".csv";
                 var fileStream = File.Create(cTempCarsTxt);
