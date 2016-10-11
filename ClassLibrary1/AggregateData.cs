@@ -39,9 +39,9 @@ namespace Aggregator
                 }
             }
 
-            var monthAgo = DateTime.Now.AddDays(-3);
+            var amountOfDaysAgo = DateTime.Now.AddDays(-3);
 
-            var listedAtLeastMonthAgo = cars.Where(c => c.Value.Prices.Keys.Max() > monthAgo).OrderByDescending(f => 1 - (f.Value.Prices.Values.Last() / f.Value.Prices.Values.First()));
+            var listedAtLeastMonthAgo = cars.Where(c => c.Value.Prices.Keys.Max() > amountOfDaysAgo).OrderByDescending(f => 1 - (f.Value.Prices.Values.Last() / f.Value.Prices.Values.First()));
 
             return listedAtLeastMonthAgo.ToDictionary(d => d.Key, y => new SortedItem() { Prices = y.Value.Prices, Link = y.Value.Link });
         }
@@ -52,9 +52,9 @@ namespace Aggregator
             sb.AppendLine("<ol>");
             foreach (var car in aggregate)
             {
-                string Template = "<li><div><a Href='{3}'> {0} (R{1})</a> <span class=\"sparklines\">{2}</span></div></li>";
+                string Template = "<li><div><a Href='{3}'> {0} (R{1} - [{4} days])</a> <span class=\"sparklines\">{2}</span></div></li>";
                 var link = string.IsNullOrWhiteSpace(car.Value.Link) ? "http://www.wesellcars.co.za" : car.Value.Link;
-                sb.AppendLine(string.Format(Template, car.Key, car.Value.Prices.Last().Value, string.Join(",", car.Value.Prices.Select(c => c.Value)), link));
+                sb.AppendLine(string.Format(Template, car.Key, car.Value.Prices.Last().Value, string.Join(",", car.Value.Prices.Select(c => c.Value)), link, car.Value.Age));
             }
             sb.AppendLine("</ol>");
             sb.AppendLine("<script type=\"text/javascript\"> $('.sparklines').sparkline('html'); </script>");
@@ -66,6 +66,20 @@ namespace Aggregator
     {
         public string Link { get; set; }
         public SortedDictionary<DateTime, double> Prices { get; set; }
+        public int Age
+        {
+            get
+            {
+                if (Prices == null)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return Prices.Count();
+                }
+            }
+        }
     }
 
     public class DataPoint
