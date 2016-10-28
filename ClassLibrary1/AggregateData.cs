@@ -39,7 +39,7 @@ namespace Aggregator
                 }
             }
 
-            var amountOfDaysAgo = DateTime.Now.AddDays(-3);
+            var amountOfDaysAgo = DateTime.Now.AddDays(-1);
 
             var listedAtLeastMonthAgo = cars.Where(c => c.Value.Prices.Keys.Max() > amountOfDaysAgo).OrderByDescending(f => 1 - (f.Value.Prices.Values.Last() / f.Value.Prices.Values.First()));
 
