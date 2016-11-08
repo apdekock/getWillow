@@ -161,7 +161,19 @@ namespace Aggregator
                 lastFiledSeperator = last.LastIndexOf(',');
                 lastSection = last.Substring(lastFiledSeperator);
             }
-            Price = Double.Parse(string.Concat(lastSection.Where(Char.IsDigit)));
+            double price = 0;
+            if (!Double.TryParse(string.Concat(lastSection.Where(Char.IsDigit)), out price))
+            {
+                var strings = lineContent.Split(new char[] { ',' });
+                foreach (var item in strings)
+                {
+                    if (item.Contains("Price"))
+                    {
+                        price = Double.Parse(string.Concat(item.Where(Char.IsDigit)));
+                    }
+                }
+            }
+            Price = price;
             Description = lineContent.Remove(lastFiledSeperator);
         }
 
