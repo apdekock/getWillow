@@ -39,11 +39,11 @@ namespace Aggregator
                 }
             }
 
-            var amountOfDaysAgo = DateTime.Now.AddDays(-1);
+            var amountOfDaysAgo = DateTime.Now.AddDays(-3);
 
-            var listedAtLeastMonthAgo = cars.Where(c => c.Value.Prices.Keys.Max() > amountOfDaysAgo).OrderByDescending(f => 1 - (f.Value.Prices.Values.Last() / f.Value.Prices.Values.First()));
+            var orderedList = cars.Where(c => c.Value.Prices.Keys.Max() > amountOfDaysAgo).OrderByDescending(f => 1 - (f.Value.Prices.Values.Last() / f.Value.Prices.Values.First()));
 
-            return listedAtLeastMonthAgo.ToDictionary(d => d.Key, y => new SortedItem() { Prices = y.Value.Prices, Link = y.Value.Link });
+            return orderedList.ToDictionary(d => d.Key, y => new SortedItem() { Prices = y.Value.Prices, Link = y.Value.Link });
         }
 
         public string GetHTML(Dictionary<string, SortedItem> aggregate)
@@ -52,9 +52,9 @@ namespace Aggregator
             sb.AppendLine("<ol>");
             foreach (var car in aggregate)
             {
-                string Template = "<li><div><a Href='{3}'> {0} (R{1} - [{4} days])</a> <span class=\"sparklines\">{2}</span></div></li>";
+                const string template = "<li><div><a Href='{3}'>{0} ([{4} days])</a> <span class=\"sparklines\">{2}</span></div></li>";
                 var link = string.IsNullOrWhiteSpace(car.Value.Link) ? "http://www.wesellcars.co.za" : car.Value.Link;
-                sb.AppendLine(string.Format(Template, car.Key, car.Value.Prices.Last().Value, string.Join(",", car.Value.Prices.Select(c => c.Value)), link, car.Value.Age));
+                sb.AppendLine(string.Format(template, car.Key, car.Value.Prices.Last().Value, string.Join(",", car.Value.Prices.Select(c => c.Value)), link, car.Value.Age));
             }
             sb.AppendLine("</ol>");
             sb.AppendLine("<script type=\"text/javascript\"> $('.sparklines').sparkline('html'); </script>");
