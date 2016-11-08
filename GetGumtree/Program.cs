@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.IO.Compression;
-using System.Linq;
 using System.Text;
 using Aggregator;
 using GitSharp;
@@ -18,35 +15,39 @@ namespace GetGumtree
     {
         private static void Main(string[] args)
         {
-            var arg0 = @"C:\temp\Dropbox\jnk\WeSellCars\"; // file path
-            var arg1 = @"C:\git\apdekock.github.io\"; //repo path
-            var arg2 = @"_posts\2015-08-04-weMineData.markdown"; //post path
-            var arg3 = @"C:\Program Files\Git\cmd\git.exe"; //git path
-
-            args = new[] { arg0, arg1, arg2, arg3 };
+            //var arg0 = @"C:\temp\Dropbox\jnk\WeSellCars\"; // file path
+            //var arg1 = @"C:\git\apdekock.github.io\"; //repo path
+            //var arg2 = @"_posts\2015-08-04-weMineData.markdown"; //post path
+            //var arg3 = @"C:\Program Files\Git\cmd\git.exe"; //git path
 
             try
             {
-
-                IWebDriver driver = new ChromeDriver(Path.Combine(Directory.GetCurrentDirectory(), "WebDriverServer"));
-                driver.Navigate().GoToUrl("http://www.wesellcars.co.za/");
-                var findElement = driver.FindElements(By.CssSelector("#feed_1 > div > div.vehicles.grid > div.item"));
-
                 StringBuilder listOfLines = new StringBuilder();
-                foreach (var item in findElement)
+                var chromeOptions = new ChromeOptions();
+                chromeOptions.AddArguments("-incognito");
+                using (IWebDriver driver = new ChromeDriver(Path.Combine(Directory.GetCurrentDirectory(), "WebDriverServer"), chromeOptions))
                 {
-                    var image = item.FindElement(By.CssSelector("a"));
-                    var link = image.GetAttribute("href");
-                    var lines = new List<string>(item.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.None));
-                    lines.Add(link);
-                    var format = string.Join(",", lines);
-                    listOfLines.AppendLine(format);
-                    Console.WriteLine(format);
+                    driver.Navigate().GoToUrl("http://www.wesellcars.co.za/vehicle/category/all");
+                    var findElement = driver.FindElements(By.CssSelector("#main_content > div > div.vehicles.grid > div.item"));
+
+                    foreach (var item in findElement)
+                    {
+                        var image = item.FindElement(By.CssSelector("a"));
+                        var link = image.GetAttribute("href");
+                        var lines =
+                            new List<string>(item.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.None))
+                            {
+                                link
+                            };
+                        var format = string.Join(",", lines);
+                        listOfLines.AppendLine(format);
+                        Console.WriteLine(format);
+                    }
+
+                    driver.Quit();
                 }
 
-                driver.Quit();
-
-                var cTempCarsTxt = arg0 + @"\WeSellCars_" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss") + ".csv";
+                var cTempCarsTxt = args[0] + @"\WeSellCars_" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss") + ".csv";
                 var fileStream = File.Create(cTempCarsTxt);
                 fileStream.Close();
                 File.WriteAllText(cTempCarsTxt, listOfLines.ToString());
@@ -55,34 +56,48 @@ namespace GetGumtree
             {
                 Console.WriteLine(e.Message);
             }
+
             StringBuilder postTemplate = new StringBuilder();
             postTemplate.AppendLine("---");
             postTemplate.AppendLine("layout: post ");
             postTemplate.AppendLine("title: \"Scraping and GitSharp, and Spark lines\" ");
             postTemplate.AppendLine("date: 2016-08-07");
-            postTemplate.AppendLine("quote: \"If you get pulled over for speeding. Tell them your spouse has diarrhoea. — Phil Dunphy [Phil’s - osophy]\"");
+            postTemplate.AppendLine(
+                "quote: \"If you get pulled over for speeding. Tell them your spouse has diarrhoea. — Phil Dunphy [Phil’s - osophy]\"");
             postTemplate.AppendLine("categories: scraping, auto generating post, gitsharp");
             postTemplate.AppendLine("---");
-            postTemplate.AppendLine(string.Format("This page is a daily re-generated post (last re-generated  **{0}**), that shows the movement of prices on the [www.weSellCars.co.za](http://www.wesellcars.co.za) website.", DateTime.Now));
+            postTemplate.AppendLine(
+                string.Format(
+                    "This page is a daily re-generated post (last re-generated  **{0}**), that shows the movement of prices on the [www.weSellCars.co.za](http://www.wesellcars.co.za) website.",
+                    DateTime.Now));
             postTemplate.AppendLine("");
             postTemplate.AppendLine("## Why?");
             postTemplate.AppendLine("");
-            postTemplate.AppendLine("This post is the culmination of some side projects I've been playing around with. Scraping, looking for a way to integrate with git through C# and a challenge to use this blog (which has no back-end or support for any server side scripting) to dynamically update a post. I realise that would best be accomplished through just making new posts but I opted for an altered post as this is a tech blog, and multiple posts about car prices would not be appropriate.");
+            postTemplate.AppendLine(
+                "This post is the culmination of some side projects I've been playing around with. Scraping, looking for a way to integrate with git through C# and a challenge to use this blog (which has no back-end or support for any server side scripting) to dynamically update a post. I realise that would best be accomplished through just making new posts but I opted for an altered post as this is a tech blog, and multiple posts about car prices would not be appropriate.");
             postTemplate.AppendLine("");
             postTemplate.AppendLine("# Lessons learned");
             postTemplate.AppendLine("");
-            postTemplate.AppendLine("* [GitSharp](http://www.eqqon.com/index.php/GitSharp) is limited and I needed to grab the project from [github](https://github.com/henon/GitSharp) in order to use it.");
-            postTemplate.AppendLine("    The NuGet package kept on complaining about a **repositoryformatversion** setting in config [Core] that it required even though it was present, it still complained. So, I downloaded the source to debug the issue but then I did not encounter it. Apart from that - gitsharp did not allow me to push - and it seems the project does not have a lot of contribution activity (not criticising, just stating. I should probably take this up and contribute, especially as I would like to employ git as a file store for an application. Levering off the already refined functions coudl be a win but more on that in another post).");
-            postTemplate.AppendLine("* Scraping with Selenium is probably not the best way - rather employ [HttpClient](https://msdn.microsoft.com/en-us/library/system.net.http.httpclient(v=vs.118).aspx).");
-            postTemplate.AppendLine("* For quick, easy and painless sparklines [jQuery Sparklines](http://omnipotent.net/jquery.sparkline/#s-about)");
-            postTemplate.AppendLine("* No backend required, just a simple process running on a server, that commits to a repo (ghPages) gets the job done.");
+            postTemplate.AppendLine(
+                "* [GitSharp](http://www.eqqon.com/index.php/GitSharp) is limited and I needed to grab the project from [github](https://github.com/henon/GitSharp) in order to use it.");
+            postTemplate.AppendLine(
+                "    The NuGet package kept on complaining about a **repositoryformatversion** setting in config [Core] that it required even though it was present, it still complained. So, I downloaded the source to debug the issue but then I did not encounter it. Apart from that - gitsharp did not allow me to push - and it seems the project does not have a lot of contribution activity (not criticising, just stating. I should probably take this up and contribute, especially as I would like to employ git as a file store for an application. Levering off the already refined functions coudl be a win but more on that in another post).");
+            postTemplate.AppendLine(
+                "* Scraping with Selenium is probably not the best way - rather employ [HttpClient](https://msdn.microsoft.com/en-us/library/system.net.http.httpclient(v=vs.118).aspx).");
+            postTemplate.AppendLine(
+                "* For quick, easy and painless sparklines [jQuery Sparklines](http://omnipotent.net/jquery.sparkline/#s-about)");
+            postTemplate.AppendLine(
+                "* No backend required, just a simple process running on a server, that commits to a repo (ghPages) gets the job done.");
 
             postTemplate.AppendLine("");
-            postTemplate.AppendLine("## The List");
             var aggregateData = new AggregateData(new FileSystemLocation(args[0]));
             var dictionary = aggregateData.Aggregate();
 
             var html = aggregateData.GetHTML(dictionary);
+            if (dictionary.Count > 0)
+            {
+                postTemplate.AppendLine("## The List");
+            }
             postTemplate.AppendLine(html);
 
             // update post file
@@ -96,7 +111,8 @@ namespace GetGumtree
             Repository repository = new Repository(args[1]);
 
             repository.Index.Add(args[1] + args[2]);
-            Commit commited = repository.Commit(string.Format("Updated {0}", DateTime.Now), new Author("Philip de Kock", "philipdekock@gmail.com"));
+            Commit commited = repository.Commit(string.Format("Updated {0}", DateTime.Now),
+                new Author("Philip de Kock", "philipdekock@gmail.com"));
             if (commited.IsValid)
             {
                 string gitCommand = args[3];
@@ -107,142 +123,6 @@ namespace GetGumtree
                     UseShellExecute = true
                 };
                 Process.Start(psi);
-            }
-            //Console.ReadLine();
-            //try
-            //{
-            //    List<VehicleAdd> items = new List<VehicleAdd>();
-            //    GetItems(items);
-            //    var cTempCarsTxt = @"c:\temp\GumtreeCars" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss") + ".csv";
-            //    var fileStream = File.Create(cTempCarsTxt);
-            //    fileStream.Close();
-            //    var stringBuilder = new StringBuilder();
-            //    foreach (var vehicleAdd in items)
-            //    {
-            //        stringBuilder.Append(vehicleAdd.Year);
-            //        stringBuilder.Append(";");
-            //        stringBuilder.Append(vehicleAdd.Title);
-            //        stringBuilder.Append(";");
-            //        stringBuilder.Append(vehicleAdd.PriceRaw);
-            //        stringBuilder.AppendLine();
-            //    }
-            //    File.WriteAllText(cTempCarsTxt, stringBuilder.ToString());
-            //    Console.WriteLine("Done");
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex.Message);
-            //}
-            //Console.ReadLine();
-        }
-
-        private static void GetItems(List<VehicleAdd> items)
-        {
-
-            try
-            {
-                IWebDriver driver = new ChromeDriver(Path.Combine(Directory.GetCurrentDirectory(), "WebDriverServer"));
-                driver.Navigate().GoToUrl("http://www.gumtree.co.za/");
-                driver.FindElement(By.LinkText("Cars & Bakkies")).Click();
-                do
-                {
-                    items.AddRange(GetData(driver));
-                    IWebElement nextElement = driver.FindElement(By.ClassName("pagination")).FindElement(By.ClassName("next"));
-                    if (nextElement != null)
-                    {
-                        driver.Navigate().GoToUrl(nextElement.GetAttribute("href"));
-                    }
-                    else
-                    {
-                        break;
-                    }
-                } while (true);
-
-                driver.Close();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-        }
-
-        private static List<VehicleAdd> GetData(IWebDriver driver)
-        {
-            var result = new List<VehicleAdd>();
-            try
-            {
-                var resultsView = driver.FindElement(By.ClassName("results"));
-
-                var view = resultsView.FindElements(By.ClassName("view")).Last();
-
-                foreach (var item in view.FindElements(By.ClassName("result")))
-                {
-                    try
-                    {
-                        var vehicle = item.FindElement(By.ClassName("title")).Text;
-                        var price = item.FindElement(By.ClassName("price")).Text;
-                        var vehicleAdd = new VehicleAdd(vehicle, price);
-                        result.Add(vehicleAdd);
-                        Console.WriteLine(vehicleAdd);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            return result;
-        }
-
-        private class VehicleAdd
-        {
-            private readonly string _title;
-            private readonly string _price;
-
-            public string Year
-            {
-                get
-                {
-                    string pattern = @"\b\d{4}\b";
-                    var r = new System.Text.RegularExpressions.Regex(pattern);
-
-                    var year = r.Match(_title);
-                    if (year.Success)
-                    {
-                        return r.Match(_title).ToString();
-                    }
-                    return string.Empty;
-                }
-            }
-
-            public VehicleAdd(string title, string price)
-            {
-                _title = title;
-                _price = price;
-            }
-
-            public string Title
-            {
-                get { return _title; }
-            }
-
-            public string Price
-            {
-                get { return _price; }
-            }
-
-            public string PriceRaw
-            {
-                get { return string.Join("", Price.ToCharArray().Where(Char.IsDigit)); }
-            }
-
-            public override string ToString()
-            {
-                return string.Format("{0} - {1} - {2}", Year, PriceRaw, Title);
             }
         }
     }
