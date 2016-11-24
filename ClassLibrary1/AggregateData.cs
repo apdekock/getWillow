@@ -52,7 +52,7 @@ namespace Aggregator
             sb.AppendLine("<ol>");
             foreach (var car in aggregate)
             {
-                const string template = "<li><div><a Href='{3}'>{0} ([{4} days])</a> <span class=\"sparklines\">{2}</span></div></li>";
+                const string template = "<li><div><a Href='{3}'>{0} ([{4} days] - R {1})</a> <span class=\"sparklines\">{2}</span></div></li>";
                 var link = string.IsNullOrWhiteSpace(car.Value.Link) ? "http://www.wesellcars.co.za" : car.Value.Link;
                 sb.AppendLine(string.Format(template, car.Key, car.Value.Prices.Last().Value, string.Join(",", car.Value.Prices.Select(c => c.Value)), link, car.Value.Age));
             }
@@ -161,6 +161,7 @@ namespace Aggregator
                 lastFiledSeperator = last.LastIndexOf(',');
                 lastSection = last.Substring(lastFiledSeperator);
             }
+            var descriptionComponents = new List<string>();
             double price = 0;
             if (!Double.TryParse(string.Concat(lastSection.Where(Char.IsDigit)), out price))
             {
@@ -171,10 +172,18 @@ namespace Aggregator
                     {
                         price = Double.Parse(string.Concat(item.Where(Char.IsDigit)));
                     }
+                    else if (!item.StartsWith("http"))
+                    {
+                        descriptionComponents.Add(item);
+                    }
                 }
+                Description = string.Join(",", descriptionComponents);
             }
-            Price = price;
-            Description = lineContent.Remove(lastFiledSeperator);
+            else
+            {
+                Description = lineContent.Remove(lastFiledSeperator);
+            }
+            Price = price;   
         }
 
         public string Description { get; set; }
