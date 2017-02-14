@@ -25,16 +25,18 @@ namespace Aggregator
             {
                 foreach (var lineItem in dataItem.LineItems)
                 {
-                    if (!cars.ContainsKey(lineItem.Description))
+                    var uniqueKey = lineItem.Description + lineItem.Link;
+                    if (!cars.ContainsKey(uniqueKey))
                     {
                         var p = new SortedDictionary<DateTime, double> { { dataItem.DateTime, lineItem.Price } };
-                        cars.Add(lineItem.Description, new SortedItem { Prices = p, Link = lineItem.Link });
+                        cars.Add(uniqueKey, new SortedItem { Prices = p, Link = lineItem.Link, LineItem = lineItem });
                     }
                     else
                     {
-                        var dictionary = cars[lineItem.Description];
+                        var dictionary = cars[uniqueKey];
                         dictionary.Prices[dataItem.DateTime] = lineItem.Price;
                         dictionary.Link = lineItem.Link;
+                        dictionary.LineItem = lineItem;
                     }
                 }
             }
@@ -43,7 +45,7 @@ namespace Aggregator
 
             var orderedList = cars.Where(c => c.Value.Prices.Keys.Max() > amountOfDaysAgo).OrderByDescending(f => 1 - (f.Value.Prices.Values.Last() / f.Value.Prices.Values.First()));
 
-            return orderedList.ToDictionary(d => d.Key, y => new SortedItem() { Prices = y.Value.Prices, Link = y.Value.Link });
+            return orderedList.ToDictionary(d => d.Key, y => new SortedItem() { Prices = y.Value.Prices, Link = y.Value.Link, LineItem = y.Value.LineItem });
         }
 
         public string GetHTML(Dictionary<string, SortedItem> aggregate)
@@ -54,7 +56,7 @@ namespace Aggregator
             {
                 const string template = "<li><div><a Href='{3}'>{0} ([{4} days] - R {1})</a> <span class=\"sparklines\">{2}</span></div></li>";
                 var link = string.IsNullOrWhiteSpace(car.Value.Link) ? "http://www.wesellcars.co.za" : car.Value.Link;
-                sb.AppendLine(string.Format(template, car.Key, car.Value.Prices.Last().Value, string.Join(",", car.Value.Prices.Select(c => c.Value)), link, car.Value.Age));
+                sb.AppendLine(string.Format(template, car.Value.LineItem.Description, car.Value.Prices.Last().Value, string.Join(",", car.Value.Prices.Select(c => c.Value)), link, car.Value.Age));
             }
             sb.AppendLine("</ol>");
             sb.AppendLine("<script type=\"text/javascript\"> $('.sparklines').sparkline('html'); </script>");
@@ -80,6 +82,8 @@ namespace Aggregator
                 }
             }
         }
+
+        public LineItem LineItem { get; set; }
     }
 
     public class DataPoint
@@ -183,7 +187,7 @@ namespace Aggregator
             {
                 Description = lineContent.Remove(lastFiledSeperator);
             }
-            Price = price;   
+            Price = price;
         }
 
         public string Description { get; set; }
