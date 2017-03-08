@@ -62,3 +62,6 @@ C:\git\GetGumtree\GetGumtree\bin\Release\System.Net.Http.Formatting.xml
 C:\git\GetGumtree\GetGumtree\obj\Release\GetGumtree.csprojResolveAssemblyReference.cache
 C:\git\GetGumtree\GetGumtree\obj\Release\GetGumtree.exe
 C:\git\GetGumtree\GetGumtree\obj\Release\GetGumtree.pdb
+C:\git\GetGumtree - Copy\GetGumtree\bin\Release\GetGumtree.exe.config
+C:\git\GetGumtree - Copy\GetGumtree\obj\Release\GetGumtree.exe
+C:\git\GetGumtree - Copy\GetGumtree\obj\Release\GetGumtree.pdb
