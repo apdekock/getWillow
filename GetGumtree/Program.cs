@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using Aggregator;
+using System.Linq;
 using GitSharp;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -22,7 +23,7 @@ namespace GetGumtree
 
             try
             {
-                List<string> listOfLines = new List<string>();
+                List<LineItem> listOfLines = new List<LineItem>();
                 var chromeOptions = new ChromeOptions();
                 chromeOptions.AddArguments("-incognito");
                 using (IWebDriver driver = new ChromeDriver(Path.Combine(Directory.GetCurrentDirectory(), "WebDriverServer"), chromeOptions))
@@ -37,19 +38,52 @@ namespace GetGumtree
                         Urls.Add(link.GetAttribute("href"));
                     }
 
-                    var lines1 = ScrapeLink(driver);
-                    Console.WriteLine(string.Join(Environment.NewLine, lines1));
-                    listOfLines.AddRange(lines1);
+                    var firstLine = ScrapeLink(driver);
+                    Console.WriteLine(string.Join(Environment.NewLine, firstLine.Select(x => x.ToString())));
+                    listOfLines.AddRange(firstLine);
 
                     foreach (var link in Urls)
                     {
                         driver.Navigate().GoToUrl(link);
-                        var lines2 = ScrapeLink(driver);
-                        Console.WriteLine(string.Join(Environment.NewLine, lines2));
-                        listOfLines.AddRange(lines2);
+                        var subsequentLines = ScrapeLink(driver);
+                        Console.WriteLine(string.Join(Environment.NewLine, subsequentLines.Select(x => x.ToString())));
+                        listOfLines.AddRange(subsequentLines);
 
                     }
-                    // var link = "http://www.willowcrestmotors.co.za/results.php?start=" + pageNumber + "&submit=1";
+
+                    foreach (var item in listOfLines)
+                    {
+                        driver.Navigate().GoToUrl(item.URL);
+                        var price = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(1) > td > table > tbody > tr > td.bodyfont")).Text;
+                        var description = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(1) > td")).Text;
+                        var features = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(2) > td")).Text;
+                        var stockNo = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(3) > td:nth-child(2)")).Text;
+                        var manufacturer = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(4) > td:nth-child(2)")).Text;
+                        var Model = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(5) > td:nth-child(2)")).Text;
+                        var Fuel = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(6) > td:nth-child(2)")).Text;
+                        var km = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(7) > td:nth-child(2)")).Text;
+                        var Category = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(8) > td:nth-child(2)")).Text;
+                        var Year = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(9) > td:nth-child(2)")).Text;
+                        var Doors = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(11) > td:nth-child(2)")).Text;
+                        var Colour = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(12) > td:nth-child(2)")).Text;
+                        var EngineCC = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(13) > td:nth-child(2)")).Text;
+                        var detailItem = new LineItemDetail();
+                        detailItem.Price = price;
+                        detailItem.Description = description;
+                        detailItem.Features = features;
+                        detailItem.StockNo = stockNo;
+                        detailItem.Manufacturer = manufacturer;
+                        detailItem.Model = Model;
+                        detailItem.Fuel = Fuel;
+                        detailItem.km = km;
+                        detailItem.Category = Category;
+                        detailItem.Year = Year;
+                        detailItem.Doors = Doors;
+                        detailItem.Colour = Colour;
+                        detailItem.EngineCC = EngineCC;
+
+                        item.Detail = detailItem;
+                    }
 
 
                     driver.Quit();
@@ -66,10 +100,43 @@ namespace GetGumtree
             }
 
         }
-
-        private static string[] ScrapeLink(IWebDriver driver)
+        private class LineItemDetail
         {
-            List<string> listOfLines = new List<string>();
+            public string Price { get; set; }
+            public string Description { get; set; }
+            public string Features { get; set; }
+
+            public string StockNo { get; set; }
+            public string Manufacturer { get; set; }
+            public string Model { get; set; }
+            public string Fuel { get; set; }
+            public string km { get; set; }
+            public string Category { get; set; }
+            public string Year { get; set; }
+            public string Doors { get; set; }
+            public string Colour { get; set; }
+            public string EngineCC { get; set; }
+        }
+        private class LineItem
+        {
+            public LineItem(string description, string url)
+            {
+                Description = description;
+                URL = url;
+            }
+
+            public string Description { get; set; }
+            public string URL { get; set; }
+            public LineItemDetail Detail
+            { get; set; }
+            public override string ToString()
+            {
+                return Description + ";" + URL;
+            }
+        }
+        private static LineItem[] ScrapeLink(IWebDriver driver)
+        {
+            List<LineItem> listOfLines = new List<LineItem>();
             var findElement = driver.FindElements(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > table > tbody"));
 
             foreach (var item in findElement)
@@ -89,7 +156,7 @@ namespace GetGumtree
                         var src = image.GetAttribute("href");
                         var description = row.FindElement(By.ClassName("bodyfontdkgrey"));
 
-                        listOfLines.Add(description.Text + ";" + src);
+                        listOfLines.Add(new LineItem(description.Text, src));
 
                         //find back link and click
 

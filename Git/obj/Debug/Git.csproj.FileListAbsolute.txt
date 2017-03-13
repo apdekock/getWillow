@@ -64,3 +64,18 @@ C:\git\GetGumtree - Copy\Git\bin\Debug\GitSharp.Core.xml
 C:\git\GetGumtree - Copy\Git\obj\Debug\Git.csprojResolveAssemblyReference.cache
 C:\git\GetGumtree - Copy\Git\obj\Debug\git.dll
 C:\git\GetGumtree - Copy\Git\obj\Debug\git.pdb
+C:\git\getWillow\Git\bin\Debug\Resources\Commands.xml
+C:\git\getWillow\Git\bin\Debug\git.XML
+C:\git\getWillow\Git\bin\Debug\git.dll
+C:\git\getWillow\Git\bin\Debug\git.pdb
+C:\git\getWillow\Git\bin\Debug\GitSharp.Core.dll
+C:\git\getWillow\Git\bin\Debug\GitSharp.dll
+C:\git\getWillow\Git\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\git\getWillow\Git\bin\Debug\Tamir.SharpSSH.dll
+C:\git\getWillow\Git\bin\Debug\GitSharp.pdb
+C:\git\getWillow\Git\bin\Debug\GitSharp.xml
+C:\git\getWillow\Git\bin\Debug\GitSharp.Core.pdb
+C:\git\getWillow\Git\bin\Debug\GitSharp.Core.xml
+C:\git\getWillow\Git\obj\Debug\Git.csprojResolveAssemblyReference.cache
+C:\git\getWillow\Git\obj\Debug\git.dll
+C:\git\getWillow\Git\obj\Debug\git.pdb

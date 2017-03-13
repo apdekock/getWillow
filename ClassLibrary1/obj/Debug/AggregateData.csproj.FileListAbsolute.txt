@@ -19,3 +19,10 @@ C:\git\GetGumtree - Copy\ClassLibrary1\bin\Debug\Winterdom.IO.FileMap.dll
 C:\git\GetGumtree - Copy\ClassLibrary1\obj\Debug\AggregateData.csprojResolveAssemblyReference.cache
 C:\git\GetGumtree - Copy\ClassLibrary1\obj\Debug\Aggregator.dll
 C:\git\GetGumtree - Copy\ClassLibrary1\obj\Debug\Aggregator.pdb
+C:\git\getWillow\ClassLibrary1\bin\Debug\Aggregator.dll
+C:\git\getWillow\ClassLibrary1\bin\Debug\Aggregator.pdb
+C:\git\getWillow\ClassLibrary1\bin\Debug\Tamir.SharpSSH.dll
+C:\git\getWillow\ClassLibrary1\bin\Debug\Winterdom.IO.FileMap.dll
+C:\git\getWillow\ClassLibrary1\obj\Debug\AggregateData.csprojResolveAssemblyReference.cache
+C:\git\getWillow\ClassLibrary1\obj\Debug\Aggregator.dll
+C:\git\getWillow\ClassLibrary1\obj\Debug\Aggregator.pdb
