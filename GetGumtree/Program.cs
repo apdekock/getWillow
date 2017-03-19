@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Text;
-using Aggregator;
 using System.Linq;
-using GitSharp;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using File = System.IO.File;
+using System.Net;
 
-namespace GetGumtree
+namespace GetWillow
 {
     class Program
     {
@@ -81,7 +78,19 @@ namespace GetGumtree
                         detailItem.Doors = Doors;
                         detailItem.Colour = Colour;
                         detailItem.EngineCC = EngineCC;
-
+                        var imagesRow = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(2) > form > table > tbody > tr:nth-child(2) > td"));
+                        Pictures pictures = new Pictures();
+                        pictures.PictureStreams = new List<byte[]>();
+                        foreach (var image in imagesRow.FindElements(By.CssSelector("img")))
+                        {
+                            var link = image.GetAttribute("src");
+                            using (WebClient webClient = new WebClient())
+                            {
+                                byte[] data = webClient.DownloadData(link);
+                                pictures.PictureStreams.Add(data);
+                            }
+                        }
+                        item.Pictures = pictures;
                         item.Detail = detailItem;
                     }
 
@@ -99,6 +108,10 @@ namespace GetGumtree
                 Console.WriteLine(e.Message);
             }
 
+        }
+        private class Pictures
+        {
+            public List<byte[]> PictureStreams { get; set; }
         }
         private class LineItemDetail
         {
@@ -129,6 +142,8 @@ namespace GetGumtree
             public string URL { get; set; }
             public LineItemDetail Detail
             { get; set; }
+            public Pictures Pictures { get; set; }
+
             public override string ToString()
             {
                 return Description + ";" + URL;
