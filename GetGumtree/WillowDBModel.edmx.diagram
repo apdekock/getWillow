@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="87a8771d825047589d4b2b9ff8668541" Name="Diagram1">
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.AclRecord" Width="1.5" PointX="17.25" PointY="50" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.ActivityLog" Width="1.5" PointX="12" PointY="61.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.ActivityLogType" Width="1.5" PointX="9.75" PointY="55" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Address" Width="1.5" PointX="7.5" PointY="58.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.AddressAttribute" Width="1.5" PointX="0.75" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.AddressAttributeValue" Width="1.5" PointX="3" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Affiliate" Width="1.5" PointX="9.75" PointY="50.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.BackInStockSubscription" Width="1.5" PointX="15" PointY="61.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.BlogComment" Width="1.5" PointX="12" PointY="57.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.BlogPost" Width="1.5" PointX="9.75" PointY="73.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Campaign" Width="1.5" PointX="5.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Category" Width="1.5" PointX="9.75" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.CategoryTemplate" Width="1.5" PointX="10.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.CheckoutAttribute" Width="1.5" PointX="10.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.CheckoutAttributeValue" Width="1.5" PointX="13" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Country" Width="1.5" PointX="3" PointY="48.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.CrossSellProduct" Width="1.5" PointX="5.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Currency" Width="1.5" PointX="11.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Customer" Width="1.5" PointX="9.75" PointY="58.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.CustomerAttribute" Width="1.5" PointX="0.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.CustomerAttributeValue" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.CustomerRole" Width="1.5" PointX="15" PointY="57.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.DeliveryDate" Width="1.5" PointX="12.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Discount" Width="1.5" PointX="7.5" PointY="35.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.DiscountRequirement" Width="1.5" PointX="9.75" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.DiscountUsageHistory" Width="1.5" PointX="23.25" PointY="60.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Download" Width="1.5" PointX="13.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.EmailAccount" Width="1.5" PointX="5.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.ExternalAuthenticationRecord" Width="1.5" PointX="12" PointY="67.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Forums_Forum" Width="1.5" PointX="15.75" PointY="40" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Forums_Group" Width="1.5" PointX="13.5" PointY="40.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Forums_Post" Width="1.5" PointX="15" PointY="65.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Forums_PostVote" Width="1.5" PointX="17.25" PointY="68.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Forums_PrivateMessage" Width="1.5" PointX="12" PointY="75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Forums_Subscription" Width="1.5" PointX="12" PointY="79" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Forums_Topic" Width="1.5" PointX="18" PointY="61" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.GenericAttribute" Width="1.5" PointX="11.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.GiftCard" Width="1.5" PointX="28.5" PointY="56" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.GiftCardUsageHistory" Width="1.5" PointX="26.25" PointY="61.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.GoogleProduct" Width="1.5" PointX="0.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Language" Width="1.5" PointX="7.5" PointY="74" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.LocaleStringResource" Width="1.5" PointX="9.75" PointY="79.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.LocalizedProperty" Width="1.5" PointX="9.75" PointY="82.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Log" Width="1.5" PointX="12" PointY="86.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Manufacturer" Width="1.5" PointX="9.75" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.ManufacturerTemplate" Width="1.5" PointX="2.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.MeasureDimension" Width="1.5" PointX="4.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.MeasureWeight" Width="1.5" PointX="14.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.MessageTemplate" Width="1.5" PointX="6.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.News" Width="1.5" PointX="15.75" PointY="44.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.NewsComment" Width="1.5" PointX="18" PointY="57.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.NewsLetterSubscription" Width="1.5" PointX="15.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Order" Width="1.5" PointX="21" PointY="56.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.OrderItem" Width="1.5" PointX="26.25" PointY="55.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.OrderNote" Width="1.5" PointX="23.25" PointY="64.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.PermissionRecord" Width="1.5" PointX="12.75" PointY="50" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Picture" Width="1.5" PointX="12.75" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Poll" Width="1.5" PointX="13.5" PointY="82.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.PollAnswer" Width="1.5" PointX="15.75" PointY="82.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.PollVotingRecord" Width="1.5" PointX="18" PointY="65.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.PredefinedProductAttributeValue" Width="1.5" PointX="15" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Product" Width="1.5" PointX="9.75" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Product_Category_Mapping" Width="1.5" PointX="12" PointY="33" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Product_Manufacturer_Mapping" Width="1.5" PointX="12" PointY="28.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Product_Picture_Mapping" Width="1.5" PointX="15" PointY="36.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Product_ProductAttribute_Mapping" Width="1.5" PointX="15" PointY="31.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Product_SpecificationAttribute_Mapping" Width="1.5" PointX="18" PointY="36.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.ProductAttribute" Width="1.5" PointX="12.75" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.ProductAttributeCombination" Width="1.5" PointX="12" PointY="45.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.ProductAttributeValue" Width="1.5" PointX="17.25" PointY="27.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.ProductReview" Width="1.5" PointX="12" PointY="53" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.ProductReviewHelpfulness" Width="1.5" PointX="14.25" PointY="54" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.ProductTag" Width="1.5" PointX="12" PointY="38.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.ProductTemplate" Width="1.5" PointX="15.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.ProductWarehouseInventory" Width="1.5" PointX="18" PointY="32.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.QueuedEmail" Width="1.5" PointX="8" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.RecurringPayment" Width="1.5" PointX="23.25" PointY="73.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.RecurringPaymentHistory" Width="1.5" PointX="25.5" PointY="74" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.RelatedProduct" Width="1.5" PointX="16.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.ReturnRequest" Width="1.5" PointX="12" PointY="115.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.ReturnRequestAction" Width="1.5" PointX="17.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.ReturnRequestReason" Width="1.5" PointX="2.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.RewardPointsHistory" Width="1.5" PointX="26.25" PointY="65.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.ScheduleTask" Width="1.5" PointX="17.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.SearchTerm" Width="1.5" PointX="17.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Setting" Width="1.5" PointX="17.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Shipment" Width="1.5" PointX="23.25" PointY="81.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.ShipmentItem" Width="1.5" PointX="25.5" PointY="81.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.ShippingByWeight" Width="1.5" PointX="17.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.ShippingMethod" Width="1.5" PointX="0.75" PointY="49.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.ShoppingCartItem" Width="1.5" PointX="18" PointY="53.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.SpecificationAttribute" Width="1.5" PointX="13.5" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.SpecificationAttributeOption" Width="1.5" PointX="15.75" PointY="17.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.StateProvince" Width="1.5" PointX="5.25" PointY="71.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Store" Width="1.5" PointX="9.75" PointY="68.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.StoreMapping" Width="1.5" PointX="12" PointY="71.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.StorePickupPoint" Width="1.5" PointX="4.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.TaxCategory" Width="1.5" PointX="18.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.TaxRate" Width="1.5" PointX="6.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.TierPrice" Width="1.5" PointX="20.25" PointY="52.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Topic" Width="1.5" PointX="19.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.TopicTemplate" Width="1.5" PointX="19.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.UrlRecord" Width="1.5" PointX="19.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Vendor" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.VendorNote" Width="1.5" PointX="3" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="nopCommerceDB_willowcrestModel.Warehouse" Width="1.5" PointX="15.75" PointY="24.75" IsExpanded="true" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.AclRecord_CustomerRole" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ActivityLog_ActivityLogType" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ActivityLog_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.Address_Country" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.Address_StateProvince" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.Affiliate_Address" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.Customer_BillingAddress" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.Customer_ShippingAddress" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.Order_BillingAddress" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.Order_PickupAddress" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.Order_ShippingAddress" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.AddressAttributeValue_AddressAttribute" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.BackInStockSubscription_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.BackInStockSubscription_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.BlogComment_BlogPost" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.BlogComment_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.BlogPost_Language" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ProductCategory_Category" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.CheckoutAttributeValue_CheckoutAttribute" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.StateProvince_Country" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ExternalAuthenticationRecord_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ForumPost_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ForumSubscription_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ForumTopic_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.Log_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.NewsComment_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.Order_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.PollVotingRecord_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.PrivateMessage_FromCustomer" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.PrivateMessage_ToCustomer" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ProductReview_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ReturnRequest_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.RewardPointsHistory_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ShoppingCartItem_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.CustomerAttributeValue_CustomerAttribute" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.TierPrice_CustomerRole" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.Discount_DiscountRequirements" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.DiscountUsageHistory_Discount" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.DiscountUsageHistory_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.QueuedEmail_EmailAccount" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.Forum_ForumGroup" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ForumTopic_Forum" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ForumPost_ForumTopic" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ForumPostVote_ForumPost" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.GiftCard_PurchasedWithOrderItem" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.GiftCardUsageHistory_GiftCard" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.GiftCardUsageHistory_UsedWithOrder" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.LocaleStringResource_Language" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.LocalizedProperty_Language" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.NewsItem_Language" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.Poll_Language" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ProductManufacturer_Manufacturer" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.NewsComment_NewsItem" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.OrderItem_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.OrderNote_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.RecurringPayment_InitialOrder" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.RewardPointsHistory_UsedWithOrder" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.Shipment_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.OrderItem_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ProductPicture_Picture" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.PollAnswer_Poll" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.PollVotingRecord_PollAnswer" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.PredefinedProductAttributeValue_ProductAttribute" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ProductAttributeCombination_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ProductAttributeMapping_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ProductCategory_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ProductManufacturer_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ProductPicture_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ProductReview_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ProductSpecificationAttribute_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ProductWarehouseInventory_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ShoppingCartItem_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.TierPrice_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ProductAttributeMapping_ProductAttribute" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ProductAttributeValue_ProductAttributeMapping" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ProductSpecificationAttribute_SpecificationAttributeOption" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ProductReview_Store" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ProductReviewHelpfulness_ProductReview" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ProductWarehouseInventory_Warehouse" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.RecurringPaymentHistory_RecurringPayment" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ShipmentItem_Shipment" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.SpecificationAttributeOption_SpecificationAttribute" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.StoreMapping_Store" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.VendorNote_Vendor" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.Customer_CustomerRole_Mapping" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.CustomerAddresses" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.Discount_AppliedToCategories" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.Discount_AppliedToManufacturers" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.Discount_AppliedToProducts" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.PermissionRecord_Role_Mapping" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.Product_ProductTag_Mapping" ManuallyRouted="false" />
+        <AssociationConnector Association="nopCommerceDB_willowcrestModel.ShippingMethodRestrictions" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

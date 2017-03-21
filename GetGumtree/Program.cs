@@ -6,11 +6,16 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using File = System.IO.File;
 using System.Net;
+using System.Data.SqlClient;
+using System.Data;
+using GetGumtree;
 
 namespace GetWillow
 {
     class Program
     {
+        public const string ConnectionString = "Server=PLEX-PC;Database=nopCommerceDB_willowcrest;User Id=sa;Password=sa;";
+
         private static void Main(string[] args)
         {
             //var arg0 = @"C:\temp\Dropbox\jnk\WeSellCars\"; // file path
@@ -21,6 +26,7 @@ namespace GetWillow
             try
             {
                 List<LineItem> listOfLines = new List<LineItem>();
+
                 var chromeOptions = new ChromeOptions();
                 chromeOptions.AddArguments("-incognito");
                 using (IWebDriver driver = new ChromeDriver(Path.Combine(Directory.GetCurrentDirectory(), "WebDriverServer"), chromeOptions))
@@ -47,7 +53,6 @@ namespace GetWillow
                         listOfLines.AddRange(subsequentLines);
 
                     }
-
                     foreach (var item in listOfLines)
                     {
                         driver.Navigate().GoToUrl(item.URL);
@@ -98,6 +103,8 @@ namespace GetWillow
                     driver.Quit();
                 }
 
+                StoreData(listOfLines);
+
                 var cTempCarsTxt = @"c:\temp\willow_" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss") + ".csv";
                 var fileStream = File.Create(cTempCarsTxt);
                 fileStream.Close();
@@ -109,6 +116,139 @@ namespace GetWillow
             }
 
         }
+
+        private static void StoreData(List<LineItem> listOfLines)
+        {
+            var entities = new nopCommerceDB_willowcrestEntities();
+
+            foreach (var item in listOfLines)
+            {
+                var category = entities.Categories.SingleOrDefault(c => c.Name == item.Detail.Category);
+                if (category == null)
+                {
+                    category = createCategory(item);
+                    entities.Categories.Add(category);
+                }
+                var product = createProduct(item);
+                entities.Products.Add(product);
+                category.Product_Category_Mapping.Add(new Product_Category_Mapping() { Product = product, Category = category, IsFeaturedProduct = false, DisplayOrder = 0 });
+                entities.SaveChanges();
+            }
+        }
+
+        private static Category createCategory(LineItem item)
+        {
+            return new Category()
+            {
+                Name = item.Detail.Category,
+                CategoryTemplateId = 1,
+                ParentCategoryId = 17,
+                PictureId = 1,
+                PageSize = 9,
+                AllowCustomersToSelectPageSize = true,
+                PageSizeOptions = "6, 3, 9",
+                ShowOnHomePage = true,
+                IncludeInTopMenu = true,
+                SubjectToAcl = false,
+                LimitedToStores = false,
+                Published = true,
+                Deleted = false,
+                DisplayOrder = 0,
+                CreatedOnUtc = DateTime.Now,
+                UpdatedOnUtc = DateTime.Now
+            };
+        }
+
+        private static Product createProduct(LineItem item)
+        {
+            return new Product()
+            {
+                ProductTypeId = 5,
+                ParentGroupedProductId = 0,
+                VisibleIndividually = true,
+                Name = item.Description,
+                ProductTemplateId = 1,
+                VendorId = 0,
+                ShowOnHomePage = false,
+                AllowCustomerReviews = false,
+                ApprovedRatingSum = 0,
+                NotApprovedRatingSum = 0,
+                ApprovedTotalReviews = 0,
+                NotApprovedTotalReviews = 0,
+                SubjectToAcl = false,
+                LimitedToStores = false,
+                IsGiftCard = false,
+                GiftCardTypeId = 0,
+                RequireOtherProducts = false,
+                AutomaticallyAddRequiredProducts = false,
+                IsDownload = false,
+                DownloadId = 0,
+                UnlimitedDownloads = false,
+                MaxNumberOfDownloads = 0,
+                DownloadActivationTypeId = 0,
+                HasSampleDownload = false,
+                SampleDownloadId = 0,
+                HasUserAgreement = false,
+                IsRecurring = false,
+                RecurringCycleLength = 0,
+                RecurringCyclePeriodId = 0,
+                RecurringTotalCycles = 0,
+                IsRental = false,
+                RentalPriceLength = 0,
+                RentalPricePeriodId = 0,
+                IsShipEnabled = false,
+                IsFreeShipping = false,
+                ShipSeparately = false,
+                AdditionalShippingCharge = 0,
+                DeliveryDateId = 0,
+                IsTaxExempt = false,
+                TaxCategoryId = 0,
+                IsTelecommunicationsOrBroadcastingOrElectronicServices = false,
+                ManageInventoryMethodId = 0,
+                UseMultipleWarehouses = false,
+                WarehouseId = 0,
+                StockQuantity = 1,
+                DisplayStockAvailability = false,
+                DisplayStockQuantity = false,
+                MinStockQuantity = 1,
+                LowStockActivityId = 0,
+                NotifyAdminForQuantityBelow = 1,
+                BackorderModeId = 0,
+                AllowBackInStockSubscriptions = false,
+                OrderMinimumQuantity = 1,
+                OrderMaximumQuantity = 1,
+                AllowAddingOnlyExistingAttributeCombinations = false,
+                NotReturnable = false,
+                DisableBuyButton = false,
+                DisableWishlistButton = false,
+                AvailableForPreOrder = false,
+                CallForPrice = false,
+                Price = item.Detail.Price,
+                OldPrice = 0,
+                ProductCost = 0,
+                CustomerEntersPrice = false,
+                MinimumCustomerEnteredPrice = 0,
+                MaximumCustomerEnteredPrice = 0,
+                BasepriceEnabled = false,
+                BasepriceAmount = 0,
+                BasepriceUnitId = 0,
+                BasepriceBaseAmount = 0,
+                BasepriceBaseUnitId = 0,
+                MarkAsNew = false,
+                HasTierPrices = false,
+                HasDiscountsApplied = false,
+                Weight = 0,
+                Length = 0,
+                Width = 0,
+                Height = 0,
+                DisplayOrder = 0,
+                Published = false,
+                Deleted = false,
+                CreatedOnUtc = DateTime.Now,
+                UpdatedOnUtc = DateTime.Now
+            };
+        }
+
         private class Pictures
         {
             public List<byte[]> PictureStreams { get; set; }

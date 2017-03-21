@@ -32,13 +32,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Selenium.WebDriverBackedSelenium, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Selenium.WebDriverBackedSelenium.3.3.0\lib\net40\Selenium.WebDriverBackedSelenium.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -59,12 +70,352 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AclRecord.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ActivityLog.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ActivityLogType.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Address.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AddressAttribute.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AddressAttributeValue.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Affiliate.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BackInStockSubscription.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BlogComment.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BlogPost.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Campaign.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Category.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CategoryTemplate.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CheckoutAttribute.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CheckoutAttributeValue.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Country.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CrossSellProduct.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Currency.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Customer.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerAttribute.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerAttributeValue.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerRole.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DeliveryDate.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Discount.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DiscountRequirement.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DiscountUsageHistory.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Download.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmailAccount.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ExternalAuthenticationRecord.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Forums_Forum.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Forums_Group.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Forums_Post.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Forums_PostVote.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Forums_PrivateMessage.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Forums_Subscription.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Forums_Topic.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GenericAttribute.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GiftCard.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GiftCardUsageHistory.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GoogleProduct.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Language.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LocaleStringResource.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LocalizedProperty.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Log.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Manufacturer.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ManufacturerTemplate.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MeasureDimension.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MeasureWeight.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MessageTemplate.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="News.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NewsComment.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NewsLetterSubscription.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Order.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrderItem.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrderNote.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PermissionRecord.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Picture.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Poll.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PollAnswer.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PollVotingRecord.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PredefinedProductAttributeValue.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Product.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductAttribute.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductAttributeCombination.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductAttributeValue.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductReview.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductReviewHelpfulness.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductTag.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductTemplate.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductWarehouseInventory.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Product_Category_Mapping.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Product_Manufacturer_Mapping.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Product_Picture_Mapping.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Product_ProductAttribute_Mapping.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Product_SpecificationAttribute_Mapping.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueuedEmail.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RecurringPayment.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RecurringPaymentHistory.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RelatedProduct.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReturnRequest.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReturnRequestAction.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReturnRequestReason.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RewardPointsHistory.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ScheduleTask.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SearchTerm.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Setting.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Shipment.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ShipmentItem.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ShippingByWeight.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ShippingMethod.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ShoppingCartItem.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SpecificationAttribute.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SpecificationAttributeOption.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StateProvince.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Store.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StoreMapping.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StorePickupPoint.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TaxCategory.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TaxRate.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TierPrice.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Topic.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TopicTemplate.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UrlRecord.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Vendor.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VendorNote.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Warehouse.cs">
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WillowDBModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WillowDBModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WillowDBModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WillowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WillowDBModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WillowDBModel.edmx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <EntityDeploy Include="WillowDBModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>WillowDBModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="WillowDBModel.edmx.diagram">
+      <DependentUpon>WillowDBModel.edmx</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="WebDriverServer\chromedriver.exe">
@@ -73,6 +424,19 @@
     <Content Include="WebDriverServer\IEDriverServer.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WillowDBModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>WillowDBModel.edmx</DependentUpon>
+      <LastGenOutput>WillowDBModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="WillowDBModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>WillowDBModel.edmx</DependentUpon>
+      <LastGenOutput>WillowDBModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
