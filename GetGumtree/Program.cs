@@ -56,6 +56,7 @@ namespace GetWillow
                     foreach (var item in listOfLines)
                     {
                         driver.Navigate().GoToUrl(item.URL);
+                        Console.WriteLine(item.URL);
                         var price = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(1) > td > table > tbody > tr > td.bodyfont")).Text;
                         var description = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(1) > td")).Text;
                         var features = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(2) > td")).Text;
@@ -70,7 +71,6 @@ namespace GetWillow
                         var Colour = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(12) > td:nth-child(2)")).Text;
                         var EngineCC = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(13) > td:nth-child(2)")).Text;
                         var detailItem = new LineItemDetail();
-                        detailItem.Price = price;
                         detailItem.Description = description;
                         detailItem.Features = features;
                         detailItem.StockNo = stockNo;
@@ -94,9 +94,11 @@ namespace GetWillow
                                 byte[] data = webClient.DownloadData(link);
                                 pictures.PictureStreams.Add(data);
                             }
+                            Console.WriteLine(link);
                         }
                         item.Pictures = pictures;
                         item.Detail = detailItem;
+                        item.Price = price;
                     }
 
 
@@ -121,19 +123,48 @@ namespace GetWillow
         {
             var entities = new nopCommerceDB_willowcrestEntities();
 
-            foreach (var item in listOfLines)
+            foreach (var lineItem in listOfLines)
             {
-                var category = entities.Categories.SingleOrDefault(c => c.Name == item.Detail.Category);
+                var category = entities.Categories.SingleOrDefault(c => c.Name == lineItem.Detail.Category);
                 if (category == null)
                 {
-                    category = createCategory(item);
+                    category = createCategory(lineItem);
                     entities.Categories.Add(category);
                 }
-                var product = createProduct(item);
+
+                var product = createProduct(lineItem);
                 entities.Products.Add(product);
-                category.Product_Category_Mapping.Add(new Product_Category_Mapping() { Product = product, Category = category, IsFeaturedProduct = false, DisplayOrder = 0 });
+                category.Product_Category_Mapping.Add(new Product_Category_Mapping() { Product = product, IsFeaturedProduct = false, DisplayOrder = 0 });
+
+                int displayOrder = 0;
+                foreach (var property in lineItem.Detail.GetType().GetProperties())
+                {
+                    var attribute = entities.SpecificationAttributes.SingleOrDefault(c => c.Name == property.Name);
+                    if (attribute == null)
+                    {
+                        attribute = createAttribute(property.Name, displayOrder++);
+                        entities.SpecificationAttributes.Add(attribute);
+                    }
+
+                    string val = GetPropValue(lineItem.Detail, property.Name).ToString();
+
+                    product.Product_SpecificationAttribute_Mapping.Add(new Product_SpecificationAttribute_Mapping() { CustomValue = val, SpecificationAttributeOption = new SpecificationAttributeOption() { Name = val.ToString() } });
+                    product.Product_Manufacturer_Mapping.Add(new Product_Manufacturer_Mapping() { Manufacturer = new Manufacturer() { Name = lineItem.Detail.Manufacturer } });
+                    foreach (var picture in lineItem.Pictures.PictureStreams)
+                    {
+                        product.Product_Picture_Mapping.Add(new Product_Picture_Mapping() { Picture = new Picture() { IsNew = true, MimeType = "image/jpeg", AltAttribute = lineItem.Description, PictureBinary = picture, TitleAttribute = lineItem.Description, SeoFilename = lineItem.Description } });
+                    }
+                }
                 entities.SaveChanges();
             }
+        }
+        public static object GetPropValue(object src, string propName)
+        {
+            return src.GetType().GetProperty(propName).GetValue(src, null);
+        }
+        private static SpecificationAttribute createAttribute(string name, int displayOrder)
+        {
+            return new SpecificationAttribute() { Name = name, DisplayOrder = displayOrder };
         }
 
         private static Category createCategory(LineItem item)
@@ -223,7 +254,7 @@ namespace GetWillow
                 DisableWishlistButton = false,
                 AvailableForPreOrder = false,
                 CallForPrice = false,
-                Price = item.Detail.Price,
+                Price = Convert.ToDecimal(string.Join("", item.Price.ToCharArray().Where(char.IsDigit))),
                 OldPrice = 0,
                 ProductCost = 0,
                 CustomerEntersPrice = false,
@@ -255,7 +286,6 @@ namespace GetWillow
         }
         private class LineItemDetail
         {
-            public string Price { get; set; }
             public string Description { get; set; }
             public string Features { get; set; }
 
@@ -284,6 +314,7 @@ namespace GetWillow
             { get; set; }
             public Pictures Pictures { get; set; }
 
+            public string Price { get; set; }
             public override string ToString()
             {
                 return Description + ";" + URL;
