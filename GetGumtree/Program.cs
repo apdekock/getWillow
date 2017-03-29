@@ -44,7 +44,7 @@ namespace GetWillow
                     var firstLine = ScrapeLink(driver);
                     Console.WriteLine(string.Join(Environment.NewLine, firstLine.Select(x => x.ToString())));
                     listOfLines.AddRange(firstLine);
-
+#if !DEBUG
                     foreach (var link in Urls)
                     {
                         driver.Navigate().GoToUrl(link);
@@ -53,6 +53,7 @@ namespace GetWillow
                         listOfLines.AddRange(subsequentLines);
 
                     }
+#endif
                     foreach (var item in listOfLines)
                     {
                         driver.Navigate().GoToUrl(item.URL);
@@ -114,10 +115,22 @@ namespace GetWillow
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine(string.Join(Environment.NewLine, getException(e)));
             }
-
+            Console.ReadLine();
         }
+
+        public static string[] getException(Exception e)
+        {
+            List<string> result = new List<string>();
+            result.Add(e.Message);
+            if (e.InnerException != null)
+            {
+                result.AddRange(getException(e.InnerException));
+            }
+            return result.ToArray();
+        }
+
 
         private static void StoreData(List<LineItem> listOfLines)
         {
@@ -125,6 +138,9 @@ namespace GetWillow
 
             foreach (var lineItem in listOfLines)
             {
+                var product = createProduct(lineItem);
+                entities.Products.Add(product);
+
                 var category = entities.Categories.SingleOrDefault(c => c.Name == lineItem.Detail.Category);
                 if (category == null)
                 {
@@ -132,29 +148,29 @@ namespace GetWillow
                     entities.Categories.Add(category);
                 }
 
-                var product = createProduct(lineItem);
-                entities.Products.Add(product);
-                category.Product_Category_Mapping.Add(new Product_Category_Mapping() { Product = product, IsFeaturedProduct = false, DisplayOrder = 0 });
+                entities.Product_Category_Mapping.Add(new Product_Category_Mapping() { Product = product, IsFeaturedProduct = false, DisplayOrder = 0, Category = category });
 
                 int displayOrder = 0;
                 foreach (var property in lineItem.Detail.GetType().GetProperties())
                 {
-                    var attribute = entities.SpecificationAttributes.SingleOrDefault(c => c.Name == property.Name);
-                    if (attribute == null)
+                    var specificationAttribute = entities.SpecificationAttributes.SingleOrDefault(c => c.Name == property.Name);
+                    if (specificationAttribute == null)
                     {
-                        attribute = createAttribute(property.Name, displayOrder++);
-                        entities.SpecificationAttributes.Add(attribute);
+                        specificationAttribute = createAttribute(property.Name, displayOrder++);
+                        entities.SpecificationAttributes.Add(specificationAttribute);
                     }
 
                     string val = GetPropValue(lineItem.Detail, property.Name).ToString();
-
-                    product.Product_SpecificationAttribute_Mapping.Add(new Product_SpecificationAttribute_Mapping() { CustomValue = val, SpecificationAttributeOption = new SpecificationAttributeOption() { Name = val.ToString() } });
-                    product.Product_Manufacturer_Mapping.Add(new Product_Manufacturer_Mapping() { Manufacturer = new Manufacturer() { Name = lineItem.Detail.Manufacturer } });
+                    var specificationAttributeOption = new SpecificationAttributeOption() { Name = val.ToString() };
+                    specificationAttribute.SpecificationAttributeOptions.Add(specificationAttributeOption);
+                    entities.Product_SpecificationAttribute_Mapping.Add(new Product_SpecificationAttribute_Mapping() { Product = product, CustomValue = val, SpecificationAttributeOption = specificationAttributeOption });
+                    entities.Product_Manufacturer_Mapping.Add(new Product_Manufacturer_Mapping() { Product = product, Manufacturer = new Manufacturer() { Name = lineItem.Detail.Manufacturer, CreatedOnUtc = DateTime.Now, UpdatedOnUtc = DateTime.Now } });
                     foreach (var picture in lineItem.Pictures.PictureStreams)
                     {
-                        product.Product_Picture_Mapping.Add(new Product_Picture_Mapping() { Picture = new Picture() { IsNew = true, MimeType = "image/jpeg", AltAttribute = lineItem.Description, PictureBinary = picture, TitleAttribute = lineItem.Description, SeoFilename = lineItem.Description } });
+                        product.Product_Picture_Mapping.Add(new Product_Picture_Mapping() { Product = product, Picture = new Picture() { IsNew = true, MimeType = "image/jpeg", AltAttribute = lineItem.Description, PictureBinary = picture, TitleAttribute = lineItem.Description, SeoFilename = lineItem.Description } });
                     }
                 }
+
                 entities.SaveChanges();
             }
         }
