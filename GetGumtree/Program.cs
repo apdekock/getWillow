@@ -44,7 +44,7 @@ namespace GetWillow
                     var firstLine = ScrapeLink(driver);
                     Console.WriteLine(string.Join(Environment.NewLine, firstLine.Select(x => x.ToString())));
                     listOfLines.AddRange(firstLine);
-#if !DEBUG
+
                     foreach (var link in Urls)
                     {
                         driver.Navigate().GoToUrl(link);
@@ -53,7 +53,7 @@ namespace GetWillow
                         listOfLines.AddRange(subsequentLines);
 
                     }
-#endif
+
                     foreach (var item in listOfLines)
                     {
                         driver.Navigate().GoToUrl(item.URL);
@@ -161,17 +161,18 @@ namespace GetWillow
                     }
 
                     string val = GetPropValue(lineItem.Detail, property.Name).ToString();
-                    var specificationAttributeOption = new SpecificationAttributeOption() { Name = val.ToString() };
+                    var specificationAttributeOption = new SpecificationAttributeOption() {  Name = val.ToString() };
                     specificationAttribute.SpecificationAttributeOptions.Add(specificationAttributeOption);
-                    entities.Product_SpecificationAttribute_Mapping.Add(new Product_SpecificationAttribute_Mapping() { Product = product, CustomValue = val, SpecificationAttributeOption = specificationAttributeOption });
+                    entities.Product_SpecificationAttribute_Mapping.Add(new Product_SpecificationAttribute_Mapping() { ShowOnProductPage=true, Product = product, CustomValue = val, SpecificationAttributeOption = specificationAttributeOption });
                     entities.Product_Manufacturer_Mapping.Add(new Product_Manufacturer_Mapping() { Product = product, Manufacturer = new Manufacturer() { Name = lineItem.Detail.Manufacturer, CreatedOnUtc = DateTime.Now, UpdatedOnUtc = DateTime.Now } });
-                    foreach (var picture in lineItem.Pictures.PictureStreams)
-                    {
-                        product.Product_Picture_Mapping.Add(new Product_Picture_Mapping() { Product = product, Picture = new Picture() { IsNew = true, MimeType = "image/jpeg", AltAttribute = lineItem.Description, PictureBinary = picture, TitleAttribute = lineItem.Description, SeoFilename = lineItem.Description } });
-                    }
-                }
 
+                }
+                for (int i = 0; i < lineItem.Pictures.PictureStreams.Count; i++)
+                {
+                    product.Product_Picture_Mapping.Add(new Product_Picture_Mapping() { DisplayOrder = i, Product = product, Picture = new Picture() { IsNew = true, MimeType = "image/jpeg", AltAttribute = lineItem.Description, PictureBinary = lineItem.Pictures.PictureStreams[i], TitleAttribute = lineItem.Description, SeoFilename = lineItem.Description } });
+                }
                 entities.SaveChanges();
+
             }
         }
         public static object GetPropValue(object src, string propName)
@@ -289,7 +290,7 @@ namespace GetWillow
                 Width = 0,
                 Height = 0,
                 DisplayOrder = 0,
-                Published = false,
+                Published = true,
                 Deleted = false,
                 CreatedOnUtc = DateTime.Now,
                 UpdatedOnUtc = DateTime.Now
