@@ -45,61 +45,71 @@ namespace GetWillow
                     Console.WriteLine(string.Join(Environment.NewLine, firstLine.Select(x => x.ToString())));
                     listOfLines.AddRange(firstLine);
 
-                    foreach (var link in Urls)
-                    {
-                        driver.Navigate().GoToUrl(link);
-                        var subsequentLines = ScrapeLink(driver);
-                        Console.WriteLine(string.Join(Environment.NewLine, subsequentLines.Select(x => x.ToString())));
-                        listOfLines.AddRange(subsequentLines);
+                    //foreach (var link in Urls)
+                    //{
+                    //    driver.Navigate().GoToUrl(link);
+                    //    var subsequentLines = ScrapeLink(driver);
+                    //    Console.WriteLine(string.Join(Environment.NewLine, subsequentLines.Select(x => x.ToString())));
+                    //    listOfLines.AddRange(subsequentLines);
 
-                    }
+                    //}
 
                     foreach (var item in listOfLines)
                     {
                         driver.Navigate().GoToUrl(item.URL);
                         Console.WriteLine(item.URL);
-                        var price = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(1) > td > table > tbody > tr > td.bodyfont")).Text;
-                        var description = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(1) > td")).Text;
-                        var features = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(2) > td")).Text;
-                        var stockNo = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(3) > td:nth-child(2)")).Text;
-                        var manufacturer = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(4) > td:nth-child(2)")).Text;
-                        var Model = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(5) > td:nth-child(2)")).Text;
-                        var Fuel = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(6) > td:nth-child(2)")).Text;
-                        var km = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(7) > td:nth-child(2)")).Text;
-                        var Category = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(8) > td:nth-child(2)")).Text;
-                        var Year = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(9) > td:nth-child(2)")).Text;
-                        var Doors = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(11) > td:nth-child(2)")).Text;
-                        var Colour = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(12) > td:nth-child(2)")).Text;
-                        var EngineCC = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(13) > td:nth-child(2)")).Text;
-                        var detailItem = new LineItemDetail();
-                        detailItem.Description = description;
-                        detailItem.Features = features;
-                        detailItem.StockNo = stockNo;
-                        detailItem.Manufacturer = manufacturer;
-                        detailItem.Model = Model;
-                        detailItem.Fuel = Fuel;
-                        detailItem.km = km;
-                        detailItem.Category = Category;
-                        detailItem.Year = Year;
-                        detailItem.Doors = Doors;
-                        detailItem.Colour = Colour;
-                        detailItem.EngineCC = EngineCC;
-                        var imagesRow = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(2) > form > table > tbody > tr:nth-child(2) > td"));
-                        Pictures pictures = new Pictures();
-                        pictures.PictureStreams = new List<byte[]>();
-                        foreach (var image in imagesRow.FindElements(By.CssSelector("img")))
+                        try
                         {
-                            var link = image.GetAttribute("src");
-                            using (WebClient webClient = new WebClient())
+
+                            var price = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(1) > td > table > tbody > tr > td.bodyfont")).Text;
+                            var description = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(1) > td")).Text;
+                            var features = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(2) > td")).Text;
+                            var stockNo = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(3) > td:nth-child(2)")).Text;
+                            var manufacturer = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(4) > td:nth-child(2)")).Text;
+                            var Model = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(5) > td:nth-child(2)")).Text;
+                            var Fuel = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(6) > td:nth-child(2)")).Text;
+                            var km = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(7) > td:nth-child(2)")).Text;
+                            var Category = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(8) > td:nth-child(2)")).Text;
+                            var Year = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(9) > td:nth-child(2)")).Text;
+                            var Doors = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(11) > td:nth-child(2)")).Text;
+                            var Colour = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(12) > td:nth-child(2)")).Text;
+                            var EngineCC = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(1) > table > tbody > tr:nth-child(13) > td:nth-child(2)")).Text;
+                            var detailItem = new LineItemDetail();
+                            detailItem.Description = description;
+                            detailItem.Features = features;
+                            detailItem.StockNo = stockNo;
+                            detailItem.Manufacturer = manufacturer;
+                            detailItem.Model = Model;
+                            detailItem.Fuel = Fuel;
+                            detailItem.km = km;
+                            detailItem.Category = Category;
+                            detailItem.Year = Year;
+                            detailItem.Doors = Doors;
+                            detailItem.Colour = Colour;
+                            detailItem.EngineCC = EngineCC;
+                            var imagesRow = driver.FindElement(By.CssSelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > center > table > tbody > tr:nth-child(3) > td:nth-child(2) > form > table > tbody > tr:nth-child(2) > td"));
+                            Pictures pictures = new Pictures();
+                            pictures.PictureStreams = new List<byte[]>();
+                            foreach (var image in imagesRow.FindElements(By.CssSelector("img")))
                             {
-                                byte[] data = webClient.DownloadData(link);
-                                pictures.PictureStreams.Add(data);
+                                var link = image.GetAttribute("src");
+                                using (WebClient webClient = new WebClient())
+                                {
+                                    byte[] data = webClient.DownloadData(link);
+                                    pictures.PictureStreams.Add(data);
+                                }
+                                Console.WriteLine(link);
                             }
-                            Console.WriteLine(link);
+                            item.Pictures = pictures;
+                            item.Detail = detailItem;
+                            item.Price = price;
+
                         }
-                        item.Pictures = pictures;
-                        item.Detail = detailItem;
-                        item.Price = price;
+                        catch (Exception ex)
+                        {
+                            item.ExceptionEncountered = true;
+                            Console.WriteLine(string.Join(Environment.NewLine, getException(ex)));
+                        }
                     }
 
 
@@ -138,6 +148,8 @@ namespace GetWillow
 
             foreach (var lineItem in listOfLines)
             {
+                if (lineItem.ExceptionEncountered)
+                    continue;
                 var product = createProduct(lineItem);
                 entities.Products.Add(product);
 
@@ -161,19 +173,44 @@ namespace GetWillow
                     }
 
                     string val = GetPropValue(lineItem.Detail, property.Name).ToString();
-                    var specificationAttributeOption = new SpecificationAttributeOption() {  Name = val.ToString() };
+                    var specificationAttributeOption = new SpecificationAttributeOption() { Name = val.ToString() };
                     specificationAttribute.SpecificationAttributeOptions.Add(specificationAttributeOption);
-                    entities.Product_SpecificationAttribute_Mapping.Add(new Product_SpecificationAttribute_Mapping() { ShowOnProductPage=true, Product = product, CustomValue = val, SpecificationAttributeOption = specificationAttributeOption });
-                    entities.Product_Manufacturer_Mapping.Add(new Product_Manufacturer_Mapping() { Product = product, Manufacturer = new Manufacturer() { Name = lineItem.Detail.Manufacturer, CreatedOnUtc = DateTime.Now, UpdatedOnUtc = DateTime.Now } });
-
+                    entities.Product_SpecificationAttribute_Mapping.Add(new Product_SpecificationAttribute_Mapping() { ShowOnProductPage = true, Product = product, CustomValue = val, SpecificationAttributeOption = specificationAttributeOption });
                 }
+                var manufacturer = entities.Manufacturers.SingleOrDefault(c => c.Name == lineItem.Detail.Manufacturer);
+                if (manufacturer == null)
+                {
+                    manufacturer = new Manufacturer() { Published = true, PageSize = 5, Name = lineItem.Detail.Manufacturer, CreatedOnUtc = DateTime.Now, UpdatedOnUtc = DateTime.Now };
+                }
+                entities.Product_Manufacturer_Mapping.Add(new Product_Manufacturer_Mapping() { Product = product, Manufacturer = manufacturer });
                 for (int i = 0; i < lineItem.Pictures.PictureStreams.Count; i++)
                 {
                     product.Product_Picture_Mapping.Add(new Product_Picture_Mapping() { DisplayOrder = i, Product = product, Picture = new Picture() { IsNew = true, MimeType = "image/jpeg", AltAttribute = lineItem.Description, PictureBinary = lineItem.Pictures.PictureStreams[i], TitleAttribute = lineItem.Description, SeoFilename = lineItem.Description } });
                 }
+                Console.WriteLine(lineItem.Description);
                 entities.SaveChanges();
 
             }
+            foreach (var product in entities.Products)
+            {
+                if (entities.UrlRecords.SingleOrDefault(x => x.EntityId == product.Id) == null)
+                {
+                    //lower(Replace(Replace(Replace(Replace(Replace(Name, ')', ''), '(', ''), '.', ''), ' ', '-'), ',', ''))
+                    var slug = string.Join("", product.Name.Select(c => Char.IsLetterOrDigit(c)));
+                    entities.UrlRecords.Add(new UrlRecord() { EntityId = product.Id, EntityName = "Product", IsActive = true, LanguageId = 0, Slug = slug });
+                }
+
+            }
+            foreach (var category in entities.Categories)
+            {
+                if (entities.UrlRecords.SingleOrDefault(x => x.EntityId == category.Id) == null)
+                {
+                    var slug = string.Join("", category.Name);
+                    entities.UrlRecords.Add(new UrlRecord() { EntityId = category.Id, EntityName = "Category", IsActive = true, LanguageId = 0, Slug = slug });
+                }
+
+            }
+            entities.SaveChanges();
         }
         public static object GetPropValue(object src, string propName)
         {
@@ -233,7 +270,7 @@ namespace GetWillow
                 DownloadId = 0,
                 UnlimitedDownloads = false,
                 MaxNumberOfDownloads = 0,
-                DownloadActivationTypeId = 0,
+                DownloadActivationTypeId = 1,
                 HasSampleDownload = false,
                 SampleDownloadId = 0,
                 HasUserAgreement = false,
@@ -279,9 +316,9 @@ namespace GetWillow
                 MaximumCustomerEnteredPrice = 0,
                 BasepriceEnabled = false,
                 BasepriceAmount = 0,
-                BasepriceUnitId = 0,
+                BasepriceUnitId = 1,
                 BasepriceBaseAmount = 0,
-                BasepriceBaseUnitId = 0,
+                BasepriceBaseUnitId = 1,
                 MarkAsNew = false,
                 HasTierPrices = false,
                 HasDiscountsApplied = false,
@@ -325,6 +362,7 @@ namespace GetWillow
                 URL = url;
             }
 
+            public bool ExceptionEncountered { get; set; }
             public string Description { get; set; }
             public string URL { get; set; }
             public LineItemDetail Detail
