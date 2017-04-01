@@ -45,14 +45,14 @@ namespace GetWillow
                     Console.WriteLine(string.Join(Environment.NewLine, firstLine.Select(x => x.ToString())));
                     listOfLines.AddRange(firstLine);
 
-                    //foreach (var link in Urls)
-                    //{
-                    //    driver.Navigate().GoToUrl(link);
-                    //    var subsequentLines = ScrapeLink(driver);
-                    //    Console.WriteLine(string.Join(Environment.NewLine, subsequentLines.Select(x => x.ToString())));
-                    //    listOfLines.AddRange(subsequentLines);
+                    foreach (var link in Urls)
+                    {
+                        driver.Navigate().GoToUrl(link);
+                        var subsequentLines = ScrapeLink(driver);
+                        Console.WriteLine(string.Join(Environment.NewLine, subsequentLines.Select(x => x.ToString())));
+                        listOfLines.AddRange(subsequentLines);
 
-                    //}
+                    }
 
                     foreach (var item in listOfLines)
                     {
@@ -193,20 +193,28 @@ namespace GetWillow
             }
             foreach (var product in entities.Products)
             {
-                if (entities.UrlRecords.SingleOrDefault(x => x.EntityId == product.Id) == null)
+                if (entities.UrlRecords.FirstOrDefault(x => x.EntityId == product.Id && x.EntityName == "Product") == null)
                 {
-                    //lower(Replace(Replace(Replace(Replace(Replace(Name, ')', ''), '(', ''), '.', ''), ' ', '-'), ',', ''))
-                    var slug = string.Join("", product.Name.Select(c => Char.IsLetterOrDigit(c)));
+                    var slug = string.Join("", product.Name.Replace(" ", "-").Where(c => Char.IsLetterOrDigit(c) || c == '-'));
                     entities.UrlRecords.Add(new UrlRecord() { EntityId = product.Id, EntityName = "Product", IsActive = true, LanguageId = 0, Slug = slug });
                 }
 
             }
             foreach (var category in entities.Categories)
             {
-                if (entities.UrlRecords.SingleOrDefault(x => x.EntityId == category.Id) == null)
+                if (entities.UrlRecords.FirstOrDefault(x => x.EntityId == category.Id && x.EntityName == "Category") == null)
                 {
                     var slug = string.Join("", category.Name);
                     entities.UrlRecords.Add(new UrlRecord() { EntityId = category.Id, EntityName = "Category", IsActive = true, LanguageId = 0, Slug = slug });
+                }
+
+            }
+            foreach (var manufacturer in entities.Manufacturers)
+            {
+                if (entities.UrlRecords.FirstOrDefault(x => x.EntityId == manufacturer.Id && x.EntityName == "Manufacturer") == null)
+                {
+                    var slug = string.Join("", manufacturer.Name);
+                    entities.UrlRecords.Add(new UrlRecord() { EntityId = manufacturer.Id, EntityName = "Manufacturer", IsActive = true, LanguageId = 0, Slug = slug });
                 }
 
             }
