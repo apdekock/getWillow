@@ -4,9 +4,7 @@ using System.IO;
 using System.Linq;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using File = System.IO.File;
 using System.Net;
-using System.Data.SqlClient;
 using System.Data;
 using GetGumtree;
 
@@ -15,7 +13,7 @@ namespace GetWillow
     class Program
     {
         public const string ConnectionString = "Server=PLEX-PC;Database=nopCommerceDB_willowcrest;User Id=sa;Password=sa;";
-
+        //Server=tcp:willowcrest.database.windows.net,1433;Integrated Security = False; Initial Catalog = nopCommerceDB_willowcrest; Persist Security Info=False;User ID =-admin-pdk@willowcrest;Password=sLpIQEFR%3k!k5&I8f1TvblFR;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout = 30;
         private static void Main(string[] args)
         {
             //var arg0 = @"C:\temp\Dropbox\jnk\WeSellCars\"; // file path
@@ -24,7 +22,7 @@ namespace GetWillow
             //var arg3 = @"C:\Program Files\Git\cmd\git.exe"; //git path
 
             try
-            {
+            {                
                 List<LineItem> listOfLines = new List<LineItem>();
 
                 var chromeOptions = new ChromeOptions();
@@ -118,15 +116,16 @@ namespace GetWillow
 
                 StoreData(listOfLines);
 
-                var cTempCarsTxt = @"c:\temp\willow_" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss") + ".csv";
-                var fileStream = File.Create(cTempCarsTxt);
-                fileStream.Close();
-                File.WriteAllText(cTempCarsTxt, string.Join(Environment.NewLine, listOfLines));
+                //var cTempCarsTxt = @"c:\temp\willow_" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss") + ".csv";
+                //var fileStream = File.Create(cTempCarsTxt);
+                //fileStream.Close();
+                //File.WriteAllText(cTempCarsTxt, string.Join(Environment.NewLine, listOfLines));
             }
             catch (Exception e)
             {
                 Console.WriteLine(string.Join(Environment.NewLine, getException(e)));
             }
+            Console.WriteLine("Done");
             Console.ReadLine();
         }
 
