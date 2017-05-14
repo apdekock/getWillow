@@ -190,6 +190,7 @@ namespace GetWillow
                 entities.SaveChanges();
 
             }
+             
             foreach (var product in entities.Products)
             {
                 if (entities.UrlRecords.FirstOrDefault(x => x.EntityId == product.Id && x.EntityName == "Product") == null)
@@ -218,7 +219,11 @@ namespace GetWillow
 
             }
             entities.SaveChanges();
+
         }
+
+
+
         public static object GetPropValue(object src, string propName)
         {
             return src.GetType().GetProperty(propName).GetValue(src, null);
